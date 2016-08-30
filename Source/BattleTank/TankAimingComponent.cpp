@@ -34,6 +34,13 @@ void UTankAimingComponent::TickComponent( float DeltaTime, ELevelTick TickType, 
 	// ...
 }
 
+
+void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent* BarrelToSet)
+{
+	Barrel = BarrelToSet;
+	
+}
+
 void UTankAimingComponent::AimAt(FVector HitLocation)
 {
 	FString TankName = GetOwner()->GetName();
