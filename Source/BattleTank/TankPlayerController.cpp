@@ -39,9 +39,8 @@ void ATankPlayerController::AimTowardsCrosshair()
 	
 	if (GetSightRayHitLocation(HitLocation)) // has "side-effect", is going to line trace
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("Hit Location: %s"), *HitLocation.ToString());
-		
-		// TODO tell the controlled tank to aim at this point
+		// Tell the controlled tank to aim at this point
+		GetControlledTank()->AimAt(HitLocation);
 	}
 		
 	return;
@@ -59,9 +58,10 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection)) // returns a bool so can say if()
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Look Direction %s"), *LookDirection.ToString());
+		// Line-trace along that look direction, and see what we hit (up to max range)
+		GetLookVectorHitLocation(LookDirection, HitLocation);
 	}
-	// Line-trace along that look direction, and see what we hit (up to max range)
+	
 	return true;
 }
 
@@ -69,6 +69,28 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& 
 {
 	FVector CameraWorldLocation; // To be discarded
 	return DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, CameraWorldLocation, LookDirection); // can return as a bool
+}
+
+bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const
+{
+	FHitResult HitResult;
+	FVector StartLocation = PlayerCameraManager->GetCameraLocation();
+	FVector EndLocation = StartLocation + (LookDirection * LineTraceRange); // LookDirection(rotation) * LineTraceRange(10km)
+
+	// if we hit something return true
+	if (GetWorld()->LineTraceSingleByChannel(
+		HitResult,
+		StartLocation,
+		EndLocation,
+		ECollisionChannel::ECC_Visibility
+	))
+	{
+		HitLocation = HitResult.Location;
+		return true;
+	}
+	// else if we don't hit something (line trace doesn't succeed), return false
+	HitLocation = FVector(0);
+	return false;
 }
 
 
