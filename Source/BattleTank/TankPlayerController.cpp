@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTank.h"
+#include "Tank.h"
 #include "TankPlayerController.h"
 
 
@@ -42,8 +43,6 @@ void ATankPlayerController::AimTowardsCrosshair()
 		// Tell the controlled tank to aim at this point
 		GetControlledTank()->AimAt(HitLocation);
 	}
-		
-	return;
 }
 
 /// Get world location of linetrace through crosshair, true if hits landscape

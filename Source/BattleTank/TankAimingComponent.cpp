@@ -29,8 +29,8 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	if (!Barrel) { return; }
 	FVector OutLaunchVelocity; // out parameter
 	FVector StartLocation = Barrel->GetSocketLocation(FName ("Projectile"));
-
-	if (UGameplayStatics::SuggestProjectileVelocity(
+	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity
+	(
 		this, // (WorldContextObject) reference to the TankAimingComponent
 		OutLaunchVelocity,
 		StartLocation,
@@ -40,14 +40,13 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		0, // no collision radius, precise
 		0, // don't overide gravity
 		ESuggestProjVelocityTraceOption::DoNotTrace // don't debug trace
-	))
+	);
+
+	if (bHaveAimSolution)
 	{
 		// calculate the OutLaunchVelocity 
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
-		// Get Barrel Component Rotation and store as FRotator
-		// Set the Barrel Rotation
-		
 	}
 }
 
