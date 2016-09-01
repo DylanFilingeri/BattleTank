@@ -7,6 +7,7 @@
 
 /// This is a forward declaration so we can use UTankBarrel as a type in the .h file and not have to have a #include
 class UTankBarrel;
+class UTankTurret;
 
 // Holds Barrel's Properties and Elevate() Method
 
@@ -20,11 +21,14 @@ public:
 	UTankAimingComponent();
 
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
+	void SetTurretReference(UTankTurret* TurretToSet);
 	
 	void AimAt(FVector HitLocation, float LaunchSpeed);
 
 private:
 	UTankBarrel* Barrel = nullptr;
+	UTankTurret* Turret = nullptr;
 
 	void MoveBarrelTowards(FVector AimDirection);
+	void MoveTurretTowards(FVector AimDirection);
 };
