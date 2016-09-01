@@ -45,7 +45,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	if (bHaveAimSolution)
 	{
 		// calculate the OutLaunchVelocity 
-		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
+		FVector AimDirection = OutLaunchVelocity.GetSafeNormal(); // get a vector of the same direction, but of unit length (which is equal to 1)
 		MoveBarrelTowards(AimDirection);
 	}
 }
@@ -59,5 +59,5 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	FRotator DeltaRotator = AimAsRotator - BarrelRotator; // difference in rotation
 	//UE_LOG(LogTemp, Warning, TEXT("BarrelRotation: %s"), *AimAsRotator.ToString());
 
-	Barrel->Elevate(5); // TODO magic number
+	Barrel->Elevate(DeltaRotator.Pitch);
 }

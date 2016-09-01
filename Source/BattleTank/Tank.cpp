@@ -12,6 +12,7 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 
 	// No need to protect pointer as added at construction
+	// Tank_BP requires TankAimingComponent (comes up as 'Aiming Component' (inherited) in blueprint)
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName ("Aiming Component"));
 }
 
