@@ -16,8 +16,11 @@ ATank::ATank()
 
 	// No need to protect pointer as added at construction
 	// Tank_BP requires TankAimingComponent (comes up as 'Aiming Component' (inherited) in blueprint)
-	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName ("Aiming Component"));
+	
+	///[REMOVED INHERITED COMPONENTS]
+	//TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName ("Aiming Component"));
 	//TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement Component"));
+	
 }
 
 // Called when the game starts or when spawned
@@ -27,13 +30,7 @@ void ATank::BeginPlay()
 	
 }
 
-// Called to bind functionality to input
-void ATank::SetupPlayerInputComponent(class UInputComponent* InputComponent)
-{
-	Super::SetupPlayerInputComponent(InputComponent);
-
-}
-
+/*
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
@@ -44,6 +41,7 @@ void ATank::SetTurretReference(UTankTurret * TurretToSet)
 {
 	TankAimingComponent->SetTurretReference(TurretToSet);
 }
+*/
 
 void ATank::Fire()
 {
@@ -67,5 +65,6 @@ void ATank::Fire()
 
 void ATank::AimAt(FVector HitLocation)
 {
+	if (!TankAimingComponent) { return; }
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
