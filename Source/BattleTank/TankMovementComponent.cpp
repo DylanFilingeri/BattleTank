@@ -15,10 +15,17 @@ void UTankMovementComponent::Initialize(UTankTrack* LeftTrackToSet, UTankTrack* 
 void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
 {
 	// No need to call Super:: as we're replacing the functionality here
-	FString TankName = GetOwner()->GetName();
-	FString MoveVelocityToString = MoveVelocity.ToString();
 
-	UE_LOG(LogTemp, Warning, TEXT("%s is moving at a velocity of: %s"), *TankName, *MoveVelocityToString);
+	auto AIForward = GetOwner()->GetActorForwardVector().GetSafeNormal(); // GetSafeNormal makes it a unit vector
+	auto AIForwardIntention = MoveVelocity.GetSafeNormal();
+
+	// use DotProduct to find the angle between the two unit vectors
+	float ForwardThrow = FVector::DotProduct(AIForward, AIForwardIntention); 
+	IntendMoveForward(ForwardThrow);
+
+	//FVector RightThrow = FVector::CrossProduct(AIForward, AIForwardIntention);
+	float RightThrow = FVector::CrossProduct( AIForward, AIForwardIntention).Z; // can make this FVector a float by using .Z at the end
+	IntendTurnRight(RightThrow);
 }
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
@@ -37,4 +44,3 @@ void UTankMovementComponent::IntendTurnRight(float Throw)
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
 }
-
