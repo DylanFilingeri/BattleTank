@@ -22,6 +22,7 @@ void UTankAimingComponent::Initialize(UTankBarrel * BarrelToSet, UTankTurret * T
 	Turret = TurretToSet;
 }
 
+/*
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	if (!ensure(BarrelToSet)) { return; }
@@ -33,8 +34,9 @@ void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
 	if (!ensure(TurretToSet)) { return; }
 	Turret = TurretToSet;
 }
+*/
 
-void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector HitLocation)
 {
 	//FString TankName = GetOwner()->GetName(); 
 	//FVector BarrelLocation = Barrel->GetComponentLocation();

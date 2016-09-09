@@ -6,7 +6,7 @@
 #include "Tank.generated.h" // put new includes above
 
 // Forward Declaration
-class UTankAimingComponent;
+//class UTankAimingComponent;
 //class UTankMovementComponent;
 class UTankBarrel;
 class UTankTurret;
@@ -32,11 +32,10 @@ public:
 	void Fire();
 
 protected:
-	
+	/*
 	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
-	/*
 	UPROPERTY(BlueprintReadOnly)
 	UTankMovementComponent* TankMovementComponent = nullptr;
 	*/
@@ -48,8 +47,9 @@ private:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	// TODO remove after factoring out fire()
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float LaunchSpeed = 4000.f; //TODO find sensible default
+	float LaunchSpeed = 4000.f;
 
 	// Local projectile reference for spawning projectile
 	UPROPERTY(EditDefaultsOnly, Category = "Setup") // Can also use EditAnywhere
