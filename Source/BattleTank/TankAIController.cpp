@@ -33,7 +33,7 @@ void ATankAIController::Tick(float DeltaTime)
 
 
 
-	if (PlayerControlledTank)
+	if (ensure(PlayerControlledTank))
 	{
 		// Move Towards The Player
 		MoveToActor(PlayerControlledTank, AcceptanceRadius);
