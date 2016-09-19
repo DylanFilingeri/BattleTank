@@ -26,7 +26,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 		void SetTurretReference(UTankTurret* TurretToSet);
 	*/
-	void AimAt(FVector HitLocation);
+	//void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
@@ -47,9 +47,10 @@ private:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	// TODO remove after factoring out fire()
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000.f;
+	
 
 	// Local projectile reference for spawning projectile
 	UPROPERTY(EditDefaultsOnly, Category = "Setup") // Can also use EditAnywhere

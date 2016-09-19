@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTank.h"
-#include "Tank.h"
+//#include "Tank.h"
 #include "TankAimingComponent.h"
 #include "TankAIController.h"
 // Depends on movement component via pathfinding system
@@ -29,25 +29,30 @@ void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick( DeltaTime );
 
-	ATank* AIControlledTank = Cast<ATank>(GetPawn());
+	//ATank* AIControlledTank = Cast<ATank>(GetPawn());
 	
-	ATank* PlayerControlledTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
-	FVector HitLocation = PlayerControlledTank->GetActorLocation();
-
-
-	if (ensure(PlayerControlledTank))
-	{
-		// Move Towards The Player
-		MoveToActor(PlayerControlledTank, AcceptanceRadius);
-
-		// Aim Towards The Player
-		//AIControlledTank->AimAt(PlayerControlledTank->GetActorLocation());
-		AIControlledTank->FindComponentByClass<UTankAimingComponent>()->AimAt(HitLocation);
-
-		// Fire If Ready
-		AIControlledTank->Fire();
-	}
+	APawn* AIControlledTank = GetPawn();
 	
+	//ATank* PlayerControlledTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	APawn* PlayerControlledTank = GetWorld()->GetFirstPlayerController()->GetPawn();
+	//FVector HitLocation = PlayerControlledTank->GetActorLocation();
+
+
+	if (!ensure(PlayerControlledTank && AIControlledTank)) { return; }
+	
+	// Move Towards The Player
+	MoveToActor(PlayerControlledTank, AcceptanceRadius);
+
+	// Aim Towards The Player
+	//AIControlledTank->AimAt(PlayerControlledTank->GetActorLocation());
+	//UTankAimingComponent* AimingComponent = AIControlledTank->FindComponentByClass<UTankAimingComponent>();
+	//AIControlledTank->FindComponentByClass<UTankAimingComponent>()->AimAt(HitLocation);
+	AIControlledTank->FindComponentByClass<UTankAimingComponent>()->AimAt(PlayerControlledTank->GetActorLocation());
+
+	// TODO Fix Firing
+	// Fire If Ready
+	//GetPawn()->Fire();
+
 }
 /*
 ATank* ATankAIController::GetControlledTank() const
