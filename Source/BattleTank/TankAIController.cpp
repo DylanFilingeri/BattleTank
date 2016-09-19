@@ -35,7 +35,7 @@ void ATankAIController::Tick(float DeltaTime)
 	
 	//ATank* PlayerControlledTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	APawn* PlayerControlledTank = GetWorld()->GetFirstPlayerController()->GetPawn();
-	//FVector HitLocation = PlayerControlledTank->GetActorLocation();
+	;
 
 
 	if (!ensure(PlayerControlledTank && AIControlledTank)) { return; }
@@ -45,13 +45,17 @@ void ATankAIController::Tick(float DeltaTime)
 
 	// Aim Towards The Player
 	//AIControlledTank->AimAt(PlayerControlledTank->GetActorLocation());
-	//UTankAimingComponent* AimingComponent = AIControlledTank->FindComponentByClass<UTankAimingComponent>();
+	
 	//AIControlledTank->FindComponentByClass<UTankAimingComponent>()->AimAt(HitLocation);
-	AIControlledTank->FindComponentByClass<UTankAimingComponent>()->AimAt(PlayerControlledTank->GetActorLocation());
+	//AIControlledTank->FindComponentByClass<UTankAimingComponent>()->AimAt(PlayerControlledTank->GetActorLocation());
+	FVector HitLocation = PlayerControlledTank->GetActorLocation();
+	UTankAimingComponent* AimingComponent = AIControlledTank->FindComponentByClass<UTankAimingComponent>();
+	AimingComponent->AimAt(HitLocation);
 
 	// TODO Fix Firing
 	// Fire If Ready
 	//GetPawn()->Fire();
+	AimingComponent->Fire();
 
 }
 /*

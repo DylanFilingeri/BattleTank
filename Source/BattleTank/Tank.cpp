@@ -3,8 +3,8 @@
 #include "BattleTank.h"
 //#include "TankAimingComponent.h"
 //#include "TankMovementComponent.h"
-#include "TankBarrel.h"
-#include "Projectile.h"
+//#include "TankBarrel.h"
+//#include "Projectile.h"
 #include "Tank.h"
 
 
@@ -44,6 +44,7 @@ void ATank::SetTurretReference(UTankTurret * TurretToSet)
 }
 */
 
+/*
 void ATank::Fire()
 {
 	if (!ensure(Barrel)) { return; }
@@ -64,7 +65,7 @@ void ATank::Fire()
 		LastFireTime = FPlatformTime::Seconds();
 	}
 }
-
+*/
 /*
 void ATank::AimAt(FVector HitLocation)
 {

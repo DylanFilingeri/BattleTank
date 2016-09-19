@@ -8,9 +8,9 @@
 // Forward Declaration
 //class UTankAimingComponent;
 //class UTankMovementComponent;
-class UTankBarrel;
-class UTankTurret;
-class AProjectile;
+//class UTankBarrel;
+//class UTankTurret;
+//class AProjectile;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -27,10 +27,11 @@ public:
 		void SetTurretReference(UTankTurret* TurretToSet);
 	*/
 	//void AimAt(FVector HitLocation);
-
+	
+	/*
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
-
+	*/
 protected:
 	/*
 	UPROPERTY(BlueprintReadOnly)
@@ -47,19 +48,21 @@ private:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	
+	/*
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000.f;
-	
+	*/
 
+	/*
 	// Local projectile reference for spawning projectile
 	UPROPERTY(EditDefaultsOnly, Category = "Setup") // Can also use EditAnywhere
 	TSubclassOf<AProjectile> ProjectileBlueprint;
-
+	*/
+	/*
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3;
-	
-	double LastFireTime = 0;
+	*/
+	//double LastFireTime = 0;
 
-	UTankBarrel* Barrel = nullptr;
+	//UTankBarrel* Barrel = nullptr;
 };
