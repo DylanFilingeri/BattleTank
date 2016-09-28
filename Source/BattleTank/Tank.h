@@ -19,27 +19,11 @@ class BATTLETANK_API ATank : public APawn
 
 		
 public:
-	/*
-	UFUNCTION(BlueprintCallable, Category = Setup)
-		void SetBarrelReference(UTankBarrel* BarrelToSet);
+	// Called by the engine when actor damage is dealt
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
-	UFUNCTION(BlueprintCallable, Category = Setup)
-		void SetTurretReference(UTankTurret* TurretToSet);
-	*/
-	//void AimAt(FVector HitLocation);
-	
-	/*
-	UFUNCTION(BlueprintCallable, Category = "Firing")
-	void Fire();
-	*/
 protected:
-	/*
-	UPROPERTY(BlueprintReadOnly)
-	UTankAimingComponent* TankAimingComponent = nullptr;
 
-	UPROPERTY(BlueprintReadOnly)
-	UTankMovementComponent* TankMovementComponent = nullptr;
-	*/
 	
 private:
 	// Sets default values for this pawn's properties
@@ -48,21 +32,9 @@ private:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	/*
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float LaunchSpeed = 4000.f;
-	*/
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	int32 StartingHealth = 100;
 
-	/*
-	// Local projectile reference for spawning projectile
-	UPROPERTY(EditDefaultsOnly, Category = "Setup") // Can also use EditAnywhere
-	TSubclassOf<AProjectile> ProjectileBlueprint;
-	*/
-	/*
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float ReloadTimeInSeconds = 3;
-	*/
-	//double LastFireTime = 0;
-
-	//UTankBarrel* Barrel = nullptr;
+	UPROPERTY(VisibleAnywhere, Category = "Health")
+	int32 CurrentHealth = StartingHealth;
 };
