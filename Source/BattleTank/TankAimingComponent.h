@@ -10,7 +10,8 @@ enum class EFiringState : uint8
 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	NoAmmo
 };
 
 /// This is a forward declaration so we can use UTankBarrel as a type in the .h file and not have to have a #include
@@ -37,8 +38,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
 
-	// Getter
+	// Getters
 	EFiringState GetFiringState() const;
+	
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	int GetAmmoLeft() const;
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
@@ -59,14 +63,17 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000.f;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float ReloadTimeInSeconds = 3;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	int Ammo = 10;
+
 	FVector AimDirection;
 
 	// Local projectile reference for spawning projectile
 	UPROPERTY(EditDefaultsOnly, Category = "Setup") // Can also use EditAnywhere
 	TSubclassOf<AProjectile> ProjectileBlueprint;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float ReloadTimeInSeconds = 3;
 
 	double LastFireTime = 0;
 };
