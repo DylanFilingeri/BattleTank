@@ -36,9 +36,6 @@ void UTankTrack::ApplySidewaysForce()
 
 void UTankTrack::SetThrottle(float Throttle)
 {
-	//FString Name = GetName();
-	//UE_LOG(LogTemp, Warning, TEXT("%s throttle: %f"), *Name, Throttle);
-
 	// clamp actual throttle value so the player can't over-drive
 	CurrentThrottle = CurrentThrottle + FMath::Clamp<float>(CurrentThrottle + Throttle, -1, 1);
 }

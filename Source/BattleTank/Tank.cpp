@@ -1,24 +1,18 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTank.h"
-//#include "TankAimingComponent.h"
-//#include "TankMovementComponent.h"
-//#include "TankBarrel.h"
-//#include "Projectile.h"
 #include "Tank.h"
 
-
-float ATank::GetHealthPercent() const
-{
-	return (float)CurrentHealth/(float)StartingHealth;
-}
 
 // Sets default values
 ATank::ATank()
 {
 	PrimaryActorTick.bCanEverTick = false;
+}
 
-	
+float ATank::GetHealthPercent() const
+{
+	return (float)CurrentHealth / (float)StartingHealth;
 }
 
 // Called when the game starts or when spawned
@@ -36,7 +30,7 @@ float ATank::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AC
 	CurrentHealth -= DamageToApply;
 	if (CurrentHealth <= 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Tank is dead yo"));
+		OnDeath.Broadcast();
 	}
 
 	return DamageToApply;

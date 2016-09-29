@@ -1,30 +1,31 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTank.h"
-//#include "Tank.h"
 #include "TankAimingComponent.h"
+#include "Tank.h"
 #include "TankPlayerController.h"
 
 
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	/*
-	ATank* ControlledTank = GetControlledTank();
-	if (!ControlledTank)
-	{
-		UE_LOG(LogTemp, Error, TEXT("PlayerController not possessing a tank. Check Tank_BP Parent Class."));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Player Controlled Tank: %s"), *ControlledTank->GetName()); // can use GetFName().ToString() as well
-	}
-	*/
 
 	UTankAimingComponent* AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }
 	FoundAimingComponent(AimingComponent);
 
+}
+
+void ATankPlayerController::SetPawn(APawn* InPawn)
+{
+	Super::SetPawn(InPawn); // if we don't call super this whole thing won't get called on this object
+	if (InPawn)
+	{
+		ATank* PlayerTank = Cast<ATank>(InPawn);
+		if (!ensure(PlayerTank)) { return; }
+
+		PlayerTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::OnTankDeath);
+	}
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -33,13 +34,6 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 	AimTowardsCrosshair();
 }
-
-/*
-APawn* ATankPlayerController::GetControlledTank() const
-{
-	return GetPawn();
-}
-*/
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
@@ -53,8 +47,6 @@ void ATankPlayerController::AimTowardsCrosshair()
 	if (GetSightRayHitLocation(HitLocation)) // has "side-effect", is going to line trace
 	{
 		// Tell the controlled tank to aim at this point
-		//GetControlledTank()->AimAt(HitLocation);
-		//GetPawn()->FindComponentByClass<UTankAimingComponent>()->AimAt(HitLocation);
 		AimingComponent->AimAt(HitLocation);
 	}
 }
@@ -104,6 +96,11 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 	// else if we don't hit something (line trace doesn't succeed), return false
 	HitLocation = FVector(0);
 	return false;
+}
+
+void ATankPlayerController::OnTankDeath()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Player tank is dead."));
 }
 
 

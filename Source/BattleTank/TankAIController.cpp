@@ -15,10 +15,11 @@ void ATankAIController::SetPawn(APawn* InPawn)
 	Super::SetPawn(InPawn); // if we don't call super this whole thing won't get called on this object
 	if (InPawn)
 	{
-		auto PossessedTank = Cast<ATank>(InPawn);
+		ATank* PossessedTank = Cast<ATank>(InPawn);
 		if (!ensure(PossessedTank)) { return; }
 
-		// TODO Subscribe our local method to the tank's death event
+		// Subscribe our local method to the tank's death event
+		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankAIController::OnTankDeath);
 	}
 }
 
@@ -43,10 +44,14 @@ void ATankAIController::Tick(float DeltaTime)
 
 	if (AimingComponent->GetFiringState() == EFiringState::Locked)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Locked"));
 		AimingComponent->Fire();
 	}
 	
 
+}
+
+void ATankAIController::OnTankDeath()
+{
+	UE_LOG(LogTemp, Warning, TEXT("AI Controller reporting dead tank"));
 }
 
