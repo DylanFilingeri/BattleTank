@@ -47,11 +47,11 @@ void ATankAIController::Tick(float DeltaTime)
 		AimingComponent->Fire();
 	}
 	
-
 }
 
 void ATankAIController::OnTankDeath()
 {
-	UE_LOG(LogTemp, Warning, TEXT("AI Controller reporting dead tank"));
+	if (!ensure(GetPawn())) { return; }
+	GetPawn()->DetachFromControllerPendingDestroy();
 }
 
